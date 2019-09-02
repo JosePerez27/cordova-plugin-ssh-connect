@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-ssh-connect"
+        version="1.0.0">
+
+    <name>Cordova Plugin SSH Connect</name>
+    <description>Cordova plugin to make connections and execute commands through SSH</description>
+    <keywords>cordova,ssh,ssh connect</keywords>
+    <author>Jose Andrés Pérez Arévalo - joseaperez27@outlook.com</author>
+    <license>ISC</license>
+    <repo>git+https://github.com/JosePerez27/cordova-plugin-ssh-connect.git</repo>
+    <issue>https://github.com/JosePerez27/cordova-plugin-ssh-connect/issues</issue>
+
+    <js-module name="sshConnect" src="www/sshConnect.js">
+        <clobbers target="cordova.plugins.sshConnect" />
+    </js-module>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="sshConnect">
+                <param name="android-package" value="sshConnect" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml">
+        </config-file>
+        <source-file src="src/android/sshConnect.java" target-dir="src/" />
+    </platform>
+</plugin>

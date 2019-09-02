@@ -1,0 +1,29 @@
+{
+  "name": "cordova-plugin-ssh-connect",
+  "version": "1.0.0",
+  "description": "Cordova plugin to make connections and execute commands through SSH",
+  "cordova": {
+    "id": "cordova-plugin-ssh-connect",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosePerez27/cordova-plugin-ssh-connect.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": {
+    "name": "Jose Andrés Pérez Arévalo",
+    "email": "joseaperez27@outlook.com",
+    "url": "https://github.com/JosePerez27/"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JosePerez27/cordova-plugin-ssh-connect/issues"
+  },
+  "homepage": "https://github.com/JosePerez27/cordova-plugin-ssh-connect#readme"
+}
