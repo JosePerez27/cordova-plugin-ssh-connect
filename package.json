@@ -21,7 +21,7 @@
     "email": "joseaperez27@outlook.com",
     "url": "https://github.com/JosePerez27/"
   },
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/JosePerez27/cordova-plugin-ssh-connect/issues"
   },
