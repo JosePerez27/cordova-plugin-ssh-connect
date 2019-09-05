@@ -1,2 +1,155 @@
-# README IN CONSTRUCTION
-Warning! this plugin isn't work yet, don't add to your project.
+# SSH Connect
+
+SSH Plugin for Cordova to make connections and execute remote commands with the [JSch](http://www.jcraft.com/jsch/) library for Android.
+
+**Contributions are welcome.**
+
+## Supported Platforms
+
+* Android
+
+## Install
+
+```sh
+cordova plugin add https://github.com/JosePerez27/cordova-plugin-ssh-connect.git
+```
+
+## Methods
+
+* window.cordova.plugins.sshConnect.connect
+* window.cordova.plugins.sshConnect.executeCommand
+* window.cordova.plugins.sshConnect.disconnect
+
+## Usage
+
+### Connect Method
+
+```typescript
+sshConnect.connect('user', 'password', 'host', port, function(success) {...}, function(failure) {...})
+```
+**Params**
+
+* `user` - Host username.  
+* `password` - Host password.  
+* `host` - Hostname or IP address.  
+* `port` - SSH port number.  
+
+**Success Response**
+
+* Return a `boolean` value.
+
+**Failure Response**
+
+* Return an error message.
+
+### Execute Command Method
+
+```typescript
+sshConnect.executeCommand('command', function(success) {...}, function(failure) {...})
+```
+**Params**
+
+* `command` - The SSH command you want to execute in the remote host.  
+
+**Success Response**
+
+* Return a `string` with the printed text on the remote console.
+
+**Failure Response**
+
+* Return an error message.
+
+### Disconnect Method
+
+```typescript
+sshConnect.disconnect(function(success) {...}, function(failure) {...})
+```
+**Params**
+
+* No params are provided.  
+
+**Success Response**
+
+* Return a `boolean` value.
+
+**Failure Response**
+
+* Return an error message.
+
+## Example Usage
+
+Now here is an example to be able to use the methods:
+
+```javascript
+  var success = function (resp) {
+    alert(resp);
+  }
+  
+  var failure = function (error) {
+    alert(error);
+  }
+  
+  window.cordova.plugins.sshConnect.connect('MyUser', 'MyPassword', '0.0.0.0', 22, success, failure);
+  window.cordova.plugins.sshConnect.executeCommand('ls -l', success, failure);
+  window.cordova.plugins.sshConnect.disconnect(success, failure);
+```
+
+## Ionic 4 Usage
+
+### Install Wrapper
+
+```sh
+npm install 'Pendind the direction'
+```
+### Definitions
+
+Define it at **app.module.ts**
+
+```ts
+import { SSHConnect } from '@ionic-native/ssh-connect/ngx';
+
+@NgModule({
+    ...
+    providers: [
+        SSHConnect
+    ],
+    ...
+})
+```
+
+Ionic wrapper functions returns promises, use them as follows:
+```typescript
+import { SSHConnect } from '@ionic-native/ssh-connect/ngx';
+
+constructor(private sshConnect: SSHConnect) { }
+
+...
+
+this.sshConnect.connect('user', 'password', 'host', port)
+  .then(resp => console.log(resp))
+  .catch(error => console.error(err));
+  
+this.sshConnect.executeCommand('command')
+  .then(resp => console.log(resp))
+  .catch(error => console.error(err));
+
+this.sshConnect.disconnect()
+  .then(resp => console.log(resp))
+  .catch(error => console.error(err));
+
+```
+## TODO
+
+* Add iOS support.
+
+## Author
+
+* Jose Andrés Pérez Arévalo, (https://github.com/JosePerez27).
+
+## Licence
+
+View the [LICENCE FILE](https://github.com/JosePerez27/cordova-plugin-ssh-connect/blob/master/LICENCE).
+
+## Issues
+
+Report at [GitHub Issues](https://github.com/JosePerez27/cordova-plugin-ssh-connect/issues).
