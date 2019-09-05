@@ -1,3 +1,9 @@
+/*
+ * Cordova SSH Connect Plugin for Android.
+ * Author: Jose Andrés Pérez Arévalo <joseaperez27@outlook.com> (https://github.com/JosePerez27)
+ * Date: Thu, 05 Sep 2019 11:18:07 -0500
+ */
+
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -23,7 +29,7 @@ import android.util.Log;
 
 public class sshConnect extends CordovaPlugin {
 
-    private static final String ENTER_KEY = "n";
+    private static final String ENTER_KEY = "\n";
     private Session session;
  
 
@@ -78,14 +84,14 @@ public class sshConnect extends CordovaPlugin {
                 // Parameter for not validating connection key
                 this.session.setConfig("StrictHostKeyChecking", "no");
                 this.session.connect();
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Connection OK: true"));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
     
             } else {
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "SSH session already started"));
             }
             
         } catch (JSchException e) {
-            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.getMessage()));
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Exception: " + e.getMessage()));
         }
     }
 
@@ -123,14 +129,14 @@ public class sshConnect extends CordovaPlugin {
             }
             
         } catch (JSchException e) {
-            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.getMessage()));
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Exception: " + e.getMessage()));
         } catch (IOException e) {
-            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.getMessage()));
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Exception: " + e.getMessage()));
         }
     }
 
     private final void disconnect(CallbackContext callbackContext) {
         this.session.disconnect();
-        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Disconnection OK: true"));
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
     }
 }

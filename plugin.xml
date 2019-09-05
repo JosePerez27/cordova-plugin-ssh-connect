@@ -26,6 +26,6 @@
             <uses-permission android:name="android.permission.INTERNET" />
         </config-file>
         <lib-file src="src/android/libs/jsch-0.1.55.jar" />
-        <source-file src="src/android/sshConnect.java" target-dir="src/" />
+        <source-file src="src/android/sshConnect.java" target-dir="src/jp/ssh" />
     </platform>
 </plugin>
