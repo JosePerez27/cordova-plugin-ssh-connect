@@ -23,7 +23,9 @@
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.INTERNET" />
         </config-file>
+        <lib-file src="src/android/libs/jsch-0.1.55.jar" />
         <source-file src="src/android/sshConnect.java" target-dir="src/" />
     </platform>
 </plugin>
