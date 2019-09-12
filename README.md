@@ -104,7 +104,7 @@ Now here is an example to be able to use the methods:
 ### Install Wrapper
 
 ```sh
-npm install 'Pendind the direction'
+npm install @ionic-native/ssh-connect
 ```
 ### Definitions
 

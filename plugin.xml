@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-ssh-connect"
-        version="1.0.0">
+        version="1.1.1">
 
     <name>Cordova Plugin SSH Connect</name>
     <description>Cordova plugin to make connections and execute commands through SSH</description>
