@@ -88,10 +88,15 @@ Now here is an example to be able to use the methods:
   var failure = function (error) {
     alert(error);
   }
-  
-  window.cordova.plugins.sshConnect.connect('MyUser', 'MyPassword', '0.0.0.0', 22, success, failure);
-  window.cordova.plugins.sshConnect.executeCommand('ls -l', success, failure);
-  window.cordova.plugins.sshConnect.disconnect(success, failure);
+
+  window.cordova.plugins.sshConnect.connect('MyUser', 'MyPassword', '0.0.0.0', 22,
+    function(resp) {
+      if (resp) {
+        window.cordova.plugins.sshConnect.executeCommand('ls -l', success, failure);
+        window.cordova.plugins.sshConnect.disconnect(success, failure);
+      }
+    }
+  , failure);
 ```
 
 ## Ionic 4 Usage
@@ -137,6 +142,27 @@ this.sshConnect.disconnect()
   .then(resp => console.log(resp))
   .catch(error => console.error(err));
 
+```
+### Example Usage
+
+There is an example to be able to use the methods in Ionic:
+
+```typescript
+  const connected = await this.sshConnect.connect('MyUser', 'MyPassword', '0.0.0.0', 22);
+
+  if (connected) {
+
+    this.sshConnect.executeCommand('ls -l')
+      .then(resp => {
+        console.log(resp);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    this.sshConnect.disconnect();
+
+  }
 ```
 ## TODO
 

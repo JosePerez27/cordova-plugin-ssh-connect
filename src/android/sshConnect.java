@@ -30,7 +30,8 @@ import android.util.Log;
 public class sshConnect extends CordovaPlugin {
 
     private static final String ENTER_KEY = "\n";
-    private Session session;
+    private static Session session;
+    private Thread thr;
  
 
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -44,11 +45,19 @@ public class sshConnect extends CordovaPlugin {
         try {
     
             if (action.equals("connect")) {
+
                 String user = args.getString(0);
                 String password = args.getString(1);
                 String host = args.getString(2);
                 int port = Integer.parseInt(args.getString(3));
-                this.connect(user, password, host, port, callbackContext);
+
+                this.thr = new Thread(new Runnable() {
+                    public void run() {
+                        connect(user, password, host, port, callbackContext);
+                    }
+                });
+
+                this.thr.start();
                 return true;
             }
     
@@ -60,6 +69,7 @@ public class sshConnect extends CordovaPlugin {
     
             if (action.equals("disconnect")) {
                 this.disconnect(callbackContext);
+                this.thr.interrupt();
                 return true;
             }
 
@@ -72,36 +82,36 @@ public class sshConnect extends CordovaPlugin {
         }
     }
 
-    private void connect(String user, String password, String host, int port, CallbackContext callbackContext) {
+    private static final void connect(String user, String password, String host, int port, CallbackContext callbackContext) {
         try {
 
-            if (this.session == null || !this.session.isConnected()) {
+            if (session == null || !session.isConnected()) {
 
                 JSch jsch = new JSch();
-                this.session = jsch.getSession(user, host, port);
-                this.session.setPassword(password);
+                session = jsch.getSession(user, host, port);
+                session.setPassword(password);
         
                 // Parameter for not validating connection key
-                this.session.setConfig("StrictHostKeyChecking", "no");
-                this.session.connect();
+                session.setConfig("StrictHostKeyChecking", "no");
+                session.connect();
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
     
             } else {
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "SSH session already started"));
             }
-            
+
         } catch (JSchException e) {
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Exception: " + e.getMessage()));
-        }
+        }   
     }
 
     private final void executeCommand(String command, CallbackContext callbackContext) {
         try {
 
-            if (this.session != null && this.session.isConnected()) {
+            if (session != null && session.isConnected()) {
 
                 // Open a SSH channel
-                ChannelExec channelExec = (ChannelExec) this.session.openChannel("exec");
+                ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
                 InputStream in = channelExec.getInputStream();
         
                 // Execute the command
@@ -136,7 +146,7 @@ public class sshConnect extends CordovaPlugin {
     }
 
     private final void disconnect(CallbackContext callbackContext) {
-        this.session.disconnect();
+        session.disconnect();
         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
     }
 }
