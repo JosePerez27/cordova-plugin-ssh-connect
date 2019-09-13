@@ -1,3 +1,7 @@
+[![Licence](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![npm](https://img.shields.io/npm/dt/cordova-plugin-ssh-connect.svg?label=npm%20downloads)](https://www.npmjs.com/package/cordova-plugin-ssh-connect)
+[![npm](https://img.shields.io/npm/v/cordova-plugin-ssh-connect)](https://www.npmjs.com/package/cordova-plugin-ssh-connect)
+
 # SSH Connect
 
 SSH Plugin for Cordova to make connections and execute remote commands with the [JSch](http://www.jcraft.com/jsch/) library for Android.
