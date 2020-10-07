@@ -49,7 +49,7 @@
                 <source url="https://github.com/CocoaPods/Specs.git"/>
             </config>
             <pods use-frameworks="true">
-                <pod name="NMSSH" spec="~> 2.0.2" />
+                <pod name="NMSSH" spec="~> 2.3.1" />
             </pods>
         </podspec>
     </platform>
