@@ -43,7 +43,14 @@
         <!-- Swift support dependency -->
         <dependency id="cordova-plugin-add-swift-support" version="1.7.2" />
 
-        <!-- Dependency pod framework -->
-        <framework src="NMSSH" type="podspec" spec="~> 2.0.2" />
+        <!-- Dependency pod frameworks -->
+        <podspec>
+            <config>
+                <source url="https://github.com/CocoaPods/Specs.git"/>
+            </config>
+            <pods use-frameworks="true">
+                <pod name="NMSSH" spec="~> 2.0.2" />
+            </pods>
+        </podspec>
     </platform>
 </plugin>
