@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Cordova
 import NMSSH
 
 @objc(SSHConnect) class SSHConnect: CDVPlugin {
