@@ -16,7 +16,7 @@ SSH Plugin for Cordova to make connections and execute remote commands with the 
 ## Install
 
 ```sh
-cordova plugin add cordova-plugin-ssh-connect
+cordova plugin add https://tuzig.com/tuzig/cordova-plugin-ssh-connect.git
 ```
 
 ## Methods
