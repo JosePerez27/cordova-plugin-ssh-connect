@@ -8,12 +8,23 @@
 import Foundation
 import NMSSH
 
-@objc(SSHConnect) class SSHConnect: CDVPlugin {
+@objc(sshConnect) class sshConnect: CDVPlugin {
     private var session: NMSSHSession?
 
-    @objc(connect:user:password:host:port:)
-    func connect(urlCommand: CDVInvokedUrlCommand, user: String, password: String, host: String, port: Int = 22) {
-        var pluginResult = buildPluginResult(error: .connectionFailed())
+    @objc(connect:)
+    func connect(_ command: CDVInvokedUrlCommand) {
+        var pluginResult: CDVPluginResult
+
+        guard
+            let user = command.arguments[0] as? String,
+            let password = command.arguments[1] as? String,
+            let host = command.arguments[2] as? String,
+            let port = command.arguments[3] as? Int
+        else {
+            pluginResult = buildPluginResult(error: .incorrectParameters())
+            self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+            return
+        }
 
         session = NMSSHSession(host: host, configs: [], withDefaultPort: port, defaultUsername: user)
         session?.connect()
@@ -31,12 +42,12 @@ import NMSSH
             pluginResult = buildPluginResult(error: .connectionFailed(message: "Could not connect"))
         }
 
-        self.commandDelegate?.send(pluginResult, callbackId: urlCommand.callbackId)
+        self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
     }
 
     @objc(disconnect:)
-    func disconnect(urlCommand: CDVInvokedUrlCommand) {
-        var pluginResult = buildPluginResult(error: .disconnectFailed())
+    func disconnect(_ command: CDVInvokedUrlCommand) {
+        var pluginResult: CDVPluginResult
 
         if let session = session,
            session.isConnected,
@@ -47,19 +58,27 @@ import NMSSH
             pluginResult = buildPluginResult(error: .commandExecutionFailed(message: "SSH not connected/authorized"))
         }
 
-        self.commandDelegate?.send(pluginResult, callbackId: urlCommand.callbackId)
+        self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
     }
 
-    @objc(executeCommand:command:)
-    func executeCommand(urlCommand: CDVInvokedUrlCommand, command: String) {
-        var pluginResult = buildPluginResult(message: "Failed", error: .commandExecutionFailed())
+    @objc(executeCommand:)
+    func executeCommand(_ command: CDVInvokedUrlCommand) {
+        var pluginResult: CDVPluginResult
+
+        guard
+            let execCommand = command.arguments[0] as? String
+        else {
+            pluginResult = buildPluginResult(error: .incorrectParameters())
+            self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
+            return
+        }
 
         if let session = session,
            session.isConnected,
            session.isAuthorized {
 
             var error: NSError?
-            let executeCommand = session.channel.execute(command, error: &error)
+            let executeCommand = session.channel.execute(execCommand, error: &error)
 
             if error != nil {
                 pluginResult = buildPluginResult(error: .commandExecutionFailed(message: error?.localizedDescription))
@@ -70,7 +89,7 @@ import NMSSH
             pluginResult = buildPluginResult(error: .commandExecutionFailed(message: "SSH not connected/authorized"))
         }
 
-        self.commandDelegate?.send(pluginResult, callbackId: urlCommand.callbackId)
+        self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
     }
 
     private func buildPluginResult(message: String? = nil, error: SSHConnectError? = nil) -> CDVPluginResult {
@@ -81,7 +100,12 @@ import NMSSH
             return pluginResult
         }
 
-        pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
+        if message != nil {
+            pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
+            return pluginResult
+        }
+
+        pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: true)
         return pluginResult
     }
 }
