@@ -8,6 +8,7 @@
 import Foundation
 
 enum SSHConnectError: Error {
+    case incorrectParameters(message: String? = nil)
     case connectionFailed(message: String? = nil)
     case authorizationFailed(message: String? = nil)
     case commandExecutionFailed(message: String? = nil)
@@ -15,6 +16,8 @@ enum SSHConnectError: Error {
 
     var description: String {
         switch self {
+        case .incorrectParameters(let message):
+            return "Incorrect or empty parameters sent. \(message ?? "")"
         case .connectionFailed(let message):
             return "Connection failed. \(message ?? "")"
         case .authorizationFailed(let message):
