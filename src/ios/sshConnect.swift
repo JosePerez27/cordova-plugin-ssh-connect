@@ -8,7 +8,8 @@
 import Foundation
 import NMSSH
 
-@objc(sshConnect) class sshConnect: CDVPlugin {
+@objc(sshConnect)
+class SSHConnect: CDVPlugin {
     private var session: NMSSHSession?
 
     @objc(connect:)
