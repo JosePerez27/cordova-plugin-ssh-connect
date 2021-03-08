@@ -4,18 +4,19 @@
 
 # SSH Connect
 
-SSH Plugin for Cordova to make connections and execute remote commands with the [JSch](http://www.jcraft.com/jsch/) library for Android.
+SSH Plugin for Cordova to make connections and execute remote commands with the [JSch](http://www.jcraft.com/jsch/) library for Android & iOS.
 
 **Contributions are welcome.**
 
 ## Supported Platforms
 
 * Android
+* iOS (Experimental)
 
 ## Install
 
 ```sh
-cordova plugin add cordova-plugin-ssh-connect
+cordova plugin add https://tuzig.com/tuzig/cordova-plugin-ssh-connect.git
 ```
 
 ## Methods
@@ -33,10 +34,10 @@ sshConnect.connect('user', 'password', 'host', port, function(success) {...}, fu
 ```
 **Params**
 
-* `user` - Host username.  
-* `password` - Host password.  
-* `host` - Hostname or IP address.  
-* `port` - SSH port number.  
+* `user` - Host username.
+* `password` - Host password.
+* `host` - Hostname or IP address.
+* `port` - SSH port number.
 
 **Success Response**
 
@@ -53,7 +54,7 @@ sshConnect.executeCommand('command', function(success) {...}, function(failure) 
 ```
 **Params**
 
-* `command` - The SSH command you want to execute in the remote host.  
+* `command` - The SSH command you want to execute in the remote host.
 
 **Success Response**
 
@@ -70,7 +71,7 @@ sshConnect.disconnect(function(success) {...}, function(failure) {...})
 ```
 **Params**
 
-* No params are provided.  
+* No params are provided.
 
 **Success Response**
 
@@ -88,7 +89,7 @@ Now here is an example to be able to use the methods:
   var success = function (resp) {
     alert(resp);
   }
-  
+
   var failure = function (error) {
     alert(error);
   }
@@ -137,7 +138,7 @@ constructor(private sshConnect: SSHConnect) { }
 this.sshConnect.connect('user', 'password', 'host', port)
   .then(resp => console.log(resp))
   .catch(error => console.error(err));
-  
+
 this.sshConnect.executeCommand('command')
   .then(resp => console.log(resp))
   .catch(error => console.error(err));
@@ -170,11 +171,12 @@ There is an example to be able to use the methods in Ionic:
 ```
 ## TODO
 
-* Add iOS support.
+* Add iOS support - In progress.
 
 ## Author
 
 * Jose Andrés Pérez Arévalo, (https://github.com/JosePerez27).
+* Tzuig LTD - iOS support, (https://github.com/tuzig).
 
 ## Licence
 
